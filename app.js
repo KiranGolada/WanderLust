@@ -64,7 +64,7 @@ app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));  
 
 app.get("/", (req, res) => {
-  res.send("Wanderlust server is running");
+  res.send("/listings");
 });
 
 const store = MongoStore.create({
