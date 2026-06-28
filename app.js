@@ -63,6 +63,10 @@ app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));  
 
+app.get("/", (req, res) => {
+  res.send("Wanderlust server is running");
+});
+
 const store = MongoStore.create({
   mongoUrl: dbUrl,
   // crypto: {
@@ -118,6 +122,12 @@ app.use((err, req, res, next) => {
   res.status(statusCode).render("error", { message });
 });
 
-app.listen(8080, () => {
-    console.log("server is listening to port 8080");
+// app.listen(8080, () => {
+//     console.log("server is listening to port 8080");
+// });
+
+const PORT = process.env.PORT || 8080;
+
+app.listen(PORT, () => {
+  console.log(`server is listening on port ${PORT}`);
 });
