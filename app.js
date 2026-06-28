@@ -8,6 +8,15 @@ if(process.env.NODE_ENV != "production") {
 const express = require("express");
 const app = express();
 
+
+app.use((req, res, next) => {
+  if (req.headers["x-forwarded-proto"] !== "https") {
+    return res.redirect("https://" + req.headers.host + req.url);
+  }
+  next();
+});
+
+
 //Error Find
 process.on("uncaughtException", (err) => {
   console.log("UNCAUGHT ERROR:", err);
@@ -88,6 +97,7 @@ const sessionOptions = {
     expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
     maxAge: 7 * 24 * 60 * 60 * 1000,
     httpOnly: true,
+    secure: true
   },
 };
 
